@@ -9,7 +9,7 @@ import lombok.Setter;
 @Entity
 public class Document {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
     @Column
