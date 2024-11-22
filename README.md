@@ -1,4 +1,4 @@
-# Document Management System
+# at.technikumwien.entities.Document Management System
 
 ## Current Progress (Sprint 2)
 
