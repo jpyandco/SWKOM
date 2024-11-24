@@ -1,18 +1,29 @@
-# at.technikumwien.entities.Document Management System
+# Document Management System
 
-## Current Progress (Sprint 2)
+## Sprint 3 Updates
 
-- **Frontend**: Nginx serves an HTML page displaying "Hello World".
-- **Backend API**: Spring Boot provides an endpoint with a basic message.
-- **Integration**: The frontend fetches data from the backend API.
-- **Docker**: Both frontend and backend run in containers managed by `docker-compose`.
+### Key Changes:
+- **Backend**: Added validators for all Business Layer (BL) entities. Validations are enforced for incoming data.
+- **Frontend**: Improved UI with a better layout and added a delete button for document entries.
+- **Testing**: Achieved >70% test coverage with unit tests for valid and invalid data for all API methods.
+- **Docker**: Updated `docker-compose` for streamlined development and testing.
 
 ## Setup
 
-1. Build and run with Docker Compose:
-
+1. **Run Application**:
    ```bash
    docker-compose up --build
    ```
 
-2. Access the frontend at [http://localhost](http://localhost) and the backend API at [http://localhost:8081/api/message](http://localhost:8081/api/message).
+2. **Access**:
+   - **Frontend**: [http://localhost](http://localhost)
+   - **Backend API**: [http://localhost:8081/api/](http://localhost:8081/api/)
+
+3. **Testing**:
+   - Execute backend tests with:
+     ```bash
+     mvn test
+     ```
+   - Validate functionality with valid and invalid inputs.
+
+Sprint 3 ensures robust validations, improved UI, comprehensive testing, and smooth integration for a production-ready system.
