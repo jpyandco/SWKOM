@@ -3,99 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send and Retrieve Data</title>
+    <title>Document Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-<h1>Send and Retrieve Data</h1>
+<header>
+    <h1>Document Management</h1>
+</header>
 
-<!-- Form to send data -->
-<form id="dataForm">
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required>
-    <br><br>
+<main>
+    <section>
+        <h2>Submit a New Document</h2>
+        <form id="dataForm">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
 
-    <label for="author">Author:</label>
-    <input type="text" id="author" name="author" required>
-    <br><br>
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" required>
 
-    <label for="text">Text:</label>
-    <textarea id="text" name="text" required></textarea>
-    <br><br>
+            <label for="text">Text:</label>
+            <textarea id="text" name="text" required></textarea>
 
-    <button type="submit">Send</button>
-</form>
+            <button type="submit">Submit</button>
+        </form>
+        <p id="responseMessage" class="success-message"></p>
+    </section>
 
-<p id="responseMessage" style="color: green;"></p>
+    <hr>
 
-<hr>
+    <section>
+        <h2>All Documents</h2>
+        <ul id="dataList"></ul>
+    </section>
+</main>
 
-<!-- Section to display data -->
-<button id="fetchDataButton">Fetch All Data</button>
-<ul id="dataList"></ul>
-
-<script>
-    // Submit form data
-    document.getElementById("dataForm").addEventListener("submit", async function (event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        // Collect data from form fields
-        const title = document.getElementById("title").value;
-        const author = document.getElementById("author").value;
-        const text = document.getElementById("text").value;
-
-        // Backend endpoint URL for sending data
-        const sendUrl = "http://localhost:8081/api/document"; // Replace with your actual backend URL
-
-        try {
-            // Send data to backend
-            const response = await fetch(sendUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ title, author, text })
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                document.getElementById("responseMessage").innerText = "Data sent successfully!";
-                console.log("Response from backend:", result);
-            } else {
-                throw new Error("Failed to send data.");
-            }
-        } catch (error) {
-            document.getElementById("responseMessage").innerText = "Error: " + error.message;
-            console.error("Error:", error);
-        }
-    });
-
-    // Fetch all data
-    document.getElementById("fetchDataButton").addEventListener("click", async function () {
-        // Backend endpoint URL for fetching data
-        const fetchUrl = "http://localhost:8081/api/all"; // Replace with your actual backend URL
-
-        try {
-            const response = await fetch(fetchUrl);
-
-            if (response.ok) {
-                const data = await response.json();
-
-                // Display the fetched data
-                const dataList = document.getElementById("dataList");
-                dataList.innerHTML = ""; // Clear the list
-                data.forEach(item => {
-                    const li = document.createElement("li");
-                    li.innerText = `Title: ${item.title}, Author: ${item.author}, Text: ${item.text}`;
-                    dataList.appendChild(li);
-                });
-            } else {
-                throw new Error("Failed to fetch data.");
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Error fetching data: " + error.message);
-        }
-    });
-</script>
+<script src="app.js"></script>
 </body>
 </html>

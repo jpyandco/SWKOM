@@ -6,7 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DocumentDTO {
-    //private int id;
+
+    private int id;
     private String title;
     private String author;
     private String text;

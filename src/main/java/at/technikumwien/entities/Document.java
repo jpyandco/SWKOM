@@ -1,6 +1,8 @@
 package at.technikumwien.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,14 +10,18 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Document {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private int id;
-    @Column
+
+    @NotBlank(message = "Title cannot be blank")
+    @Size(max = 255, message = "Title cannot exceed 255 characters")
     private String title;
-    @Column
+
+    @NotBlank(message = "Author cannot be blank")
+    @Size(max = 255, message = "Author cannot exceed 255 characters")
     private String author;
-    @Column
+
     private String text;
 }

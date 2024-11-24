@@ -6,6 +6,8 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface DocumentMapper {
+
     Document toEntity(DocumentDTO dto);
+
     DocumentDTO toDto(Document entity);
 }
