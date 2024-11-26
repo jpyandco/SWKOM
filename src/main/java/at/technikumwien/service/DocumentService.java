@@ -2,13 +2,15 @@ package at.technikumwien.service;
 
 import at.technikumwien.dto.DocumentDTO;
 import at.technikumwien.entities.Document;
+import at.technikumwien.messenging.RabbitMQSender;
+import at.technikumwien.messenging.Sender;
 import at.technikumwien.repositories.DocumentRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
-import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,9 +19,12 @@ public class DocumentService {
     private final DocumentRepository repository;
     private final Validator validator;
 
-    public DocumentService(DocumentRepository repository, Validator validator) {
+    private final RabbitMQSender sender;
+
+    public DocumentService(DocumentRepository repository, Validator validator, RabbitMQSender sender) {
         this.repository = repository;
         this.validator = validator;
+        this.sender = sender;
     }
 
     public Document saveDocument(Document document) {
@@ -31,6 +36,12 @@ public class DocumentService {
                     .orElse("Validation failed");
             throw new IllegalArgumentException("Validation failed: " + errorMessage);
         }
+        try {
+            sender.sendMessage("New Document uploaded!");
+        } catch (Exception e){
+            System.out.println(e);
+        }
+        System.out.println("In Service");
         return repository.save(document);
     }
 

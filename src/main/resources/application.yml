@@ -1,9 +1,15 @@
 spring:
   datasource:
-    url: jdbc:postgresql://postgres:5433/mydatabase
+    url: jdbc:postgresql://postgres:5432/mydatabase
     username: myuser
     password: mypassword
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+  rabbitmq:
+    #stream:
+      username: user
+      password: password
+      host: rabbitmq
+      port: 5672

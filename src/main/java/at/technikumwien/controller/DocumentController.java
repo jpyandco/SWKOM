@@ -2,12 +2,15 @@ package at.technikumwien.controller;
 
 import at.technikumwien.dto.DocumentDTO;
 import at.technikumwien.entities.Document;
+import at.technikumwien.messenging.Sender;
 import at.technikumwien.service.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 @RestController
 @RequestMapping("/api")
@@ -17,7 +20,7 @@ public class DocumentController {
     private final DocumentService documentService;
 
     @Autowired
-    public DocumentController(DocumentService documentService) {
+    public DocumentController(DocumentService documentService) throws IOException, TimeoutException {
         this.documentService = documentService;
     }
 
@@ -35,6 +38,7 @@ public class DocumentController {
             dto.setTitle(savedDocument.getTitle());
             dto.setAuthor(savedDocument.getAuthor());
             dto.setText(savedDocument.getText());
+
             return ResponseEntity.ok(dto);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
