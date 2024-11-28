@@ -13,7 +13,7 @@ public class Reciever {
 
     //private final static String QUEUE_NAME = "test";
 
-    @RabbitListener(queues = "test")
+    @RabbitListener(queues = "myQueue")
     public void receiveMessage(String message) {
         System.out.println("Received message: " + message);
     }
