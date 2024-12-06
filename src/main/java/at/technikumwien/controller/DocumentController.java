@@ -4,6 +4,8 @@ import at.technikumwien.dto.DocumentDTO;
 import at.technikumwien.entities.Document;
 import at.technikumwien.messenging.Sender;
 import at.technikumwien.service.DocumentService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,8 @@ public class DocumentController {
 
     private final DocumentService documentService;
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
     @Autowired
     public DocumentController(DocumentService documentService) throws IOException, TimeoutException {
         this.documentService = documentService;
@@ -26,11 +30,13 @@ public class DocumentController {
 
     @GetMapping("/all")
     public List<DocumentDTO> getAllDocuments() {
+        LOGGER.info("/all");
         return documentService.getAllDocuments();
     }
 
     @PostMapping("/document")
     public ResponseEntity<DocumentDTO> createDocument(@RequestBody Document document) {
+        LOGGER.info("/document");
         try {
             Document savedDocument = documentService.saveDocument(document);
             DocumentDTO dto = new DocumentDTO();
@@ -47,6 +53,7 @@ public class DocumentController {
 
     @DeleteMapping("/document/{id}")
     public ResponseEntity<String> deleteDocument(@PathVariable Long id) {
+        LOGGER.info("/delete");
         try {
             documentService.deleteDocumentById(Math.toIntExact(id));
             return ResponseEntity.ok("Document deleted successfully");

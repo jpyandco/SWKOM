@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 
 @Service
-public class Reciever {
+public class  Reciever {
 
     //private final static String QUEUE_NAME = "test";
 
