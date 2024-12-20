@@ -1,0 +1,8 @@
+spring:
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: user
+    password: password
+  ocr:
+    temp-folder: /tmp/ocr/
