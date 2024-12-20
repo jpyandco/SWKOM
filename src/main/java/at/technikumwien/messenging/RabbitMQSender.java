@@ -13,7 +13,7 @@ public class RabbitMQSender {
     }
 
     public void sendMessage(String message) {
-        rabbitTemplate.convertAndSend("myQueue", message);
+        rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_NAME, message);
         System.out.println("Sent: " + message);
     }
 }
