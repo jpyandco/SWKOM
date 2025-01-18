@@ -1,15 +1,33 @@
 document.getElementById("dataForm").addEventListener("submit", async function (event) {
     event.preventDefault();
+    const form = document.getElementById("dataForm");
+    if (!form) {
+        console.error("The form element with ID 'dataForm' is not found in the DOM.");
+        return;
+    }
+    else {
+        console.info("Form found!");
+    }
+    console.info("Hello")
 
     const title = document.getElementById("title").value;
     const author = document.getElementById("author").value;
-    const text = document.getElementById("text").value;
+    const fileInput = document.getElementById("file");
+
+    if (!fileInput.files[0]) {
+        document.getElementById("responseMessage").textContent = "Please upload a PDF document.";
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("author", author);
+    formData.append("file", fileInput.files[0]);
 
     try {
         const response = await fetch("http://localhost:8081/api/document", {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({title, author, text}),
+            body: formData
         });
 
         if (response.ok) {
@@ -53,15 +71,20 @@ async function fetchAllDocuments() {
                 const content = document.createElement("span");
                 content.innerHTML = `
                     <strong>Title:</strong> ${doc.title}, 
-                    <strong>Author:</strong> ${doc.author}, 
-                    <strong>Text:</strong> ${doc.text}
+                    <strong>Author:</strong> ${doc.author}
+                    <strong>Document:</strong> 
                 `;
+
+                const downloadButton = document.createElement("button");
+                downloadButton.textContent = "Download";
+                downloadButton.onclick = () => downloadDocument(doc.id); // Trigger the download
 
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Delete";
                 deleteButton.onclick = () => deleteDocument(doc.id);
 
                 listItem.appendChild(content);
+                listItem.appendChild(downloadButton);
                 listItem.appendChild(deleteButton);
 
                 dataList.appendChild(listItem);
@@ -71,6 +94,25 @@ async function fetchAllDocuments() {
         }
     } catch (error) {
         alert(`Error fetching documents: ${error.message}`);
+    }
+}
+
+
+async function downloadDocument(id) {
+    try {
+        const response = await fetch(`http://localhost:8081/api/document/${id}/download`);
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `document_${id}.pdf`; // Specify the file name
+            link.click();
+        } else {
+            throw new Error("Failed to download document.");
+        }
+    } catch (error) {
+        alert(`Error downloading document: ${error.message}`);
     }
 }
 

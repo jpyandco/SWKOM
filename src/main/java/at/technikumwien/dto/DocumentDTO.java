@@ -10,5 +10,5 @@ public class DocumentDTO {
     private int id;
     private String title;
     private String author;
-    private String text;
+    private byte[] data;
 }

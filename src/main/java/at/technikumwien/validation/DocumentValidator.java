@@ -7,6 +7,6 @@ public class DocumentValidator {
     public static boolean isValid(DocumentDTO dto) {
         return dto.getTitle() != null && !dto.getTitle().isBlank()
                 && dto.getAuthor() != null && !dto.getAuthor().isBlank()
-                && dto.getText() != null && !dto.getText().isBlank();
+                && dto.getData() != null;
     }
 }

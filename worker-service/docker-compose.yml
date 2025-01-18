@@ -2,10 +2,10 @@ version: '3.8'
 services:
   rabbitmq:
     image: rabbitmq:management
-    container_name: rabbitmq
+    container_name: rabbitmq_ocr
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "5673:5672"
+      - "15673:15672"
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
@@ -18,7 +18,7 @@ services:
     depends_on:
       - rabbitmq
     ports:
-      - "8080:8080"
+      - "8082:8080"
     environment:
       SPRING_RABBITMQ_HOST: rabbitmq
       SPRING_RABBITMQ_PORT: 5672

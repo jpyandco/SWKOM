@@ -17,12 +17,13 @@ public class DocumentEntityTest {
     void createCorrectDocFromDTO() {
         DocumentDTO dto = new DocumentDTO();
         dto.setTitle("TestTitle");
-        dto.setText("Secret Text");
+        byte[] content = "This is a test PDF content".getBytes();
+        dto.setData(content);
         dto.setAuthor("Hansi Hinterseer");
 
         Document doc = mapper.toEntity(dto);
         assertNotNull(doc);
-        assertEquals(dto.getText(), doc.getText());
+        assertEquals(dto.getData(), doc.getData());
         assertEquals(dto.getAuthor(), doc.getAuthor());
     }
 }

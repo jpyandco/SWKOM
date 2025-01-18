@@ -10,10 +10,14 @@ import jakarta.validation.Validator;
 import jakarta.validation.constraints.Null;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -59,7 +63,7 @@ public class DocumentService {
                         dto.setId(document.getId());
                         dto.setTitle(document.getTitle());
                         dto.setAuthor(document.getAuthor());
-                        dto.setText(document.getText());
+                        dto.setData(document.getData());
                         return dto;
                     })
                     .collect(Collectors.toList());
@@ -78,6 +82,20 @@ public class DocumentService {
             repository.deleteById((long) id);
         } catch (Exception e){
             LOGGER.error(e);
+        }
+    }
+    public ResponseEntity<byte[]> download(Long id) {
+        Optional<Document> document = repository.findById(id);
+
+        if (document.isPresent() && document.get().getData() != null) {
+            byte[] fileContent = document.get().getData();
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"document_" + id + ".pdf\"")
+                    .body(fileContent);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 }
