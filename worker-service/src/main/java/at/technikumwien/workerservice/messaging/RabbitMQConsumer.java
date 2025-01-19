@@ -4,6 +4,8 @@ import at.technikumwien.workerservice.service.OCRService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class RabbitMQConsumer {
 
@@ -17,7 +19,7 @@ public class RabbitMQConsumer {
     public void consumeMessage(byte[] files) {
         System.out.println("Received files from MainApp");
         try {
-            String text = ocrService.extractTextFromBytes(files);
+            List<String> text = ocrService.extractTextFromPdf(files);
             System.out.println("Extracted text from file: " + text);
         } catch (Exception e) {
             e.printStackTrace();

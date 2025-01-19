@@ -5,22 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b703c692-4f70-48cb-bb9f-6c442ba74f5f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/config/ElasticsearchConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/service/PdfToImageConverter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/RabbitMQConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/RabbitMQSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/RabbitMQSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/Reciever.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/Receiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/test/java/at/technikumwien/entity/DocumentEntityTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/test/java/at/technikumwien/entity/DocumentEntityTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/Receiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/MainWorkerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/MainWorkerApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/config/RabbitMQConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/entities/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/entities/Document.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/at/technikumwien/workerservice/messaging/RabbitMQConsumerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/at/technikumwien/workerservice/messaging/RabbitMQConsumerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/service/OCRService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/service/OCRService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,6 +28,9 @@ public class OCRService {
 
     @Autowired
     private DocumentRepository documentRepository;
+
+    @Autowired
+    private static PdfToImageConverter pdfToImageConverter;
 
     @Value("${spring.ocr.temp-folder}")
     private String tempFolder;
@@ -96,23 +101,37 @@ public class OCRService {
     }
 
     public String extractTextFromBytes(byte[] fileBytes) throws IOException, TesseractException {
-        // Save the byte[] to a temporary file
         File tempFile = File.createTempFile("uploaded", ".tmp");
         try (FileOutputStream fos = new FileOutputStream(tempFile)) {
             fos.write(fileBytes);
         }
 
         try {
-            // Initialize Tesseract
-            Tesseract tesseract = new Tesseract();
-            tesseract.setDatapath("/usr/share/tesseract-ocr/4.00/tessdata"); // Adjust to your Tesseract data path
-            tesseract.setLanguage("eng"); // Use the language(s) you need (e.g., "eng+deu")
-
-            // Perform OCR
             return tesseract.doOCR(tempFile);
         } finally {
             // Delete the temporary file
             tempFile.delete();
         }
+    }
+    public List<String> extractTextFromPdf(byte[] pdfBytes) throws IOException, TesseractException {
+        List<String> ocrResults = new ArrayList<>();
+
+        // Convert PDF to images
+        List<byte[]> imageBytesList = PdfToImageConverter.convertPdfToImages(pdfBytes);
+
+
+        // Process each image page
+        for (byte[] imageBytes : imageBytesList) {
+            // Convert byte[] to BufferedImage
+            try (ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes)) {
+                BufferedImage image = ImageIO.read(bais);
+
+                // Perform OCR on the image
+                String ocrText = tesseract.doOCR(image);
+                ocrResults.add(ocrText);
+            }
+        }
+
+        return ocrResults;
     }
 }

@@ -11,4 +11,9 @@ public class RabbitMQConfig {
     public Queue sharedQueue() {
         return new Queue("shared-queue", true);
     }
+
+    @Bean
+    public Queue searchQueue() {
+        return new Queue("search-queue", true);
+    }
 }

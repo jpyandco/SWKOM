@@ -16,4 +16,9 @@ public class RabbitMQSender {
         rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_NAME, files);
         System.out.println("Sent new document!");
     }
+
+    public void sendSearch(String message){
+        rabbitTemplate.convertAndSend("search-queue", message);
+        System.out.println("Sent new search request!");
+    }
 }
