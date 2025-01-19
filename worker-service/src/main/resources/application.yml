@@ -6,3 +6,8 @@ spring:
     password: password
   ocr:
     temp-folder: /tmp/ocr/
+
+  data:
+    elasticsearch:
+      cluster-name: my-elasticsearch-cluster
+      cluster-nodes: localhost:9200  # Adjust for your actual Elasticsearch container's address

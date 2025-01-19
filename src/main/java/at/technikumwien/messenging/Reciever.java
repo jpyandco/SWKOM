@@ -13,8 +13,8 @@ public class  Reciever {
 
     //private final static String QUEUE_NAME = "test";
 
-    @RabbitListener(queues = "myQueue")
-    public void receiveMessage(String message) {
-        System.out.println("Received message: " + message);
+    @RabbitListener(queues = "search-queue")
+    public void receiveMessage(byte[] files) {
+        System.out.println("Received message from worker-service");
     }
 }

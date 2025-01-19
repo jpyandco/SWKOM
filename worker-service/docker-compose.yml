@@ -1,26 +1,19 @@
 version: '3.8'
 services:
-  rabbitmq:
-    image: rabbitmq:management
-    container_name: rabbitmq_ocr
-    ports:
-      - "5673:5672"
-      - "15673:15672"
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
 
   worker-service:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: worker-service
-    depends_on:
-      - rabbitmq
     ports:
-      - "8082:8080"
+      - "8080:8080"
     environment:
       SPRING_RABBITMQ_HOST: rabbitmq
       SPRING_RABBITMQ_PORT: 5672
-      SPRING_RABBITMQ_USERNAME: guest
-      SPRING_RABBITMQ_PASSWORD: guest
+      SPRING_RABBITMQ_USERNAME: user
+      SPRING_RABBITMQ_PASSWORD: password
+
+networks:
+  swkom_app-network:
+    external: true

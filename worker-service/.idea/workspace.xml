@@ -5,26 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b703c692-4f70-48cb-bb9f-6c442ba74f5f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/MainWorkerApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/config/RabbitMQConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/service/OCRService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/at/technikumwien/workerservice/messaging/RabbitMQConsumerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/at/technikumwien/workerservice/service/OCRServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/entities/Document.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQSender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/repositories/DocumentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/RabbitMQConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/RabbitMQSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/RabbitMQSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/Reciever.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/Reciever.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/service/DocumentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/service/DocumentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/config/RabbitMQConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/service/OCRService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/service/OCRService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/at/technikumwien/workerservice/messaging/RabbitMQConsumerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/at/technikumwien/workerservice/messaging/RabbitMQConsumerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,25 +35,18 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Dockerfile" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2qU08v0LuQkNzf1xpu9AHp0Pp1i" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -68,10 +59,14 @@
   "keyToString": {
     "JUnit.All in worker-service.executor": "Run",
     "JUnit.RabbitMQConsumerTest.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Anwender/Documents/SWKOM_Test/SWKOM/worker-service",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -157,6 +152,7 @@
       <option name="presentableId" value="Default" />
       <updated>1695243528612</updated>
       <workItem from="1734701691436" duration="7928000" />
+      <workItem from="1737289489954" duration="3996000" />
     </task>
     <servers />
   </component>

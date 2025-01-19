@@ -72,12 +72,11 @@ async function fetchAllDocuments() {
                 content.innerHTML = `
                     <strong>Title:</strong> ${doc.title}, 
                     <strong>Author:</strong> ${doc.author}
-                    <strong>Document:</strong> 
                 `;
 
                 const downloadButton = document.createElement("button");
                 downloadButton.textContent = "Download";
-                downloadButton.onclick = () => downloadDocument(doc.id); // Trigger the download
+                downloadButton.onclick = () => downloadDocument(doc.id, doc.title); // Trigger the download
 
                 const deleteButton = document.createElement("button");
                 deleteButton.textContent = "Delete";
@@ -98,7 +97,7 @@ async function fetchAllDocuments() {
 }
 
 
-async function downloadDocument(id) {
+async function downloadDocument(id, title) {
     try {
         const response = await fetch(`http://localhost:8081/api/document/${id}/download`);
 
@@ -106,7 +105,7 @@ async function downloadDocument(id) {
             const blob = await response.blob();
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `document_${id}.pdf`; // Specify the file name
+            link.download = `${title}.pdf`; // Specify the file name
             link.click();
         } else {
             throw new Error("Failed to download document.");

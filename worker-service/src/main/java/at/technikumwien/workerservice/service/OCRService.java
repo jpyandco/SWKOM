@@ -1,15 +1,20 @@
 package at.technikumwien.workerservice.service;
 
+import at.technikumwien.workerservice.entities.Document;
+import at.technikumwien.workerservice.repositories.DocumentRepository;
 import net.sourceforge.tess4j.ITesseract;
+import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import org.ghost4j.document.PDFDocument;
 import org.ghost4j.renderer.SimpleRenderer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +24,28 @@ public class OCRService {
 
     private final ITesseract tesseract;
 
+    @Autowired
+    private DocumentRepository documentRepository;
+
     @Value("${spring.ocr.temp-folder}")
     private String tempFolder;
 
     public OCRService(ITesseract tesseract) {
         this.tesseract = tesseract;
+    }
+
+    public void processDocument(String title, String author, byte[] fileBytes) throws TesseractException, IOException {
+        // Perform OCR on the byte array (e.g., PDF file)
+        String extractedText = extractTextFromBytes(fileBytes);  // Implement the OCR logic here using Tesseract or another library
+
+        // Create a new document entity and set the extracted values
+        Document document = new Document();
+        document.setTitle(title);
+        document.setAuthor(author);
+        document.setText(extractedText);
+
+        // Save to Elasticsearch
+        documentRepository.save(document);
     }
 
     public String performOCR(String filePath) throws Exception {
@@ -71,5 +93,26 @@ public class OCRService {
         }
 
         return extractedText.toString();
+    }
+
+    public String extractTextFromBytes(byte[] fileBytes) throws IOException, TesseractException {
+        // Save the byte[] to a temporary file
+        File tempFile = File.createTempFile("uploaded", ".tmp");
+        try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+            fos.write(fileBytes);
+        }
+
+        try {
+            // Initialize Tesseract
+            Tesseract tesseract = new Tesseract();
+            tesseract.setDatapath("/usr/share/tesseract-ocr/4.00/tessdata"); // Adjust to your Tesseract data path
+            tesseract.setLanguage("eng"); // Use the language(s) you need (e.g., "eng+deu")
+
+            // Perform OCR
+            return tesseract.doOCR(tempFile);
+        } finally {
+            // Delete the temporary file
+            tempFile.delete();
+        }
     }
 }

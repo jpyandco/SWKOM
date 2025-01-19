@@ -11,4 +11,9 @@ public class RabbitMQConfig {
     public Queue queue() {
         return new Queue("document-queue", true);
     }
+
+    @Bean
+    public Queue searchQueue() {
+        return new Queue("search-queue", true);
+    }
 }

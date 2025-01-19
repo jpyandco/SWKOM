@@ -46,7 +46,7 @@ public class DocumentService {
 
         }
         try {
-            sender.sendMessage("New Document uploaded!");
+            sender.sendMessage(document.getData());
         } catch (Exception e){
             System.out.println(e);
             LOGGER.error(e);
@@ -89,10 +89,11 @@ public class DocumentService {
 
         if (document.isPresent() && document.get().getData() != null) {
             byte[] fileContent = document.get().getData();
+            String title = document.get().getTitle();
 
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"document_" + id + ".pdf\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + title + ".pdf\"")
                     .body(fileContent);
         } else {
             return ResponseEntity.notFound().build();
