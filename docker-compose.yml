@@ -2,9 +2,9 @@ services:
   backend:
     build: .
     ports:
-      - 8081:8080
+      - "8081:8080"
     networks:
-      - app-network
+      - shared-network
     depends_on:
       - postgres
       - rabbitmq
@@ -12,9 +12,9 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - 80:80
+      - "80:80"
     networks:
-      - app-network
+      - shared-network
     depends_on:
       - backend
 
@@ -26,9 +26,9 @@ services:
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: mydatabase
     ports:
-      - 5433:5432
+      - "5433:5432"
     networks:
-      - app-network
+      - shared-network
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d
@@ -36,21 +36,21 @@ services:
   rabbitmq:
     image: rabbitmq:management
     container_name: rabbitmq
-    ports:
-      - 5672:5672 # RabbitMQ messaging port
-      - 15672:15672  # RabbitMQ management plugin port
     environment:
-      RABBITMQ_DEFAULT_USER: user  # Default username
-      RABBITMQ_DEFAULT_PASS: password  # Default password
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - "5672:5672"   # RabbitMQ messaging port
+      - "15672:15672" # RabbitMQ management plugin port
     networks:
-      - app-network
+      - shared-network
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq  # Persistent data storage
-      - rabbitmq_logs:/var/log/rabbitmq  # Log storage
+      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_logs:/var/log/rabbitmq
 
 networks:
-  app-network:
-    driver: bridge
+  shared-network:
+    external: true
 
 volumes:
   postgres-data:

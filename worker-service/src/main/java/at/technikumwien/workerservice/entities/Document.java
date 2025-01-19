@@ -19,4 +19,3 @@ public class Document {
 
     private String text;
 }
-

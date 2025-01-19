@@ -1,6 +1,4 @@
-version: '3.8'
 services:
-
   worker-service:
     build:
       context: .
@@ -8,12 +6,21 @@ services:
     container_name: worker-service
     ports:
       - "8080:8080"
+    networks:
+      - shared-network
+    depends_on:
+      - elasticsearch
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+    container_name: elasticsearch
     environment:
-      SPRING_RABBITMQ_HOST: rabbitmq
-      SPRING_RABBITMQ_PORT: 5672
-      SPRING_RABBITMQ_USERNAME: user
-      SPRING_RABBITMQ_PASSWORD: password
+      discovery.type: single-node
+    ports:
+      - "9200:9200"
+    networks:
+      - shared-network
 
 networks:
-  swkom_app-network:
+  shared-network:
     external: true

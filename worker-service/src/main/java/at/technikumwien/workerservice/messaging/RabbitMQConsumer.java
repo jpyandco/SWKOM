@@ -13,11 +13,10 @@ public class RabbitMQConsumer {
         this.ocrService = ocrService;
     }
 
-    @RabbitListener(queues = "document-queue")
+    @RabbitListener(queues = "shared-queue")
     public void consumeMessage(byte[] files) {
-        System.out.println("Received files form MainApp");
+        System.out.println("Received files from MainApp");
         try {
-
             String text = ocrService.extractTextFromBytes(files);
             System.out.println("Extracted text from file: " + text);
         } catch (Exception e) {

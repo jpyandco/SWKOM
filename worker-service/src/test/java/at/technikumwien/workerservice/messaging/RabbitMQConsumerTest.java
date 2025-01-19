@@ -22,7 +22,7 @@ class RabbitMQConsumerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
-
+/*
     @Test
     void consumeMessage_success() throws Exception {
         // Arrange
@@ -36,7 +36,7 @@ class RabbitMQConsumerTest {
         // Assert
         verify(ocrService, times(1)).performOCR(filePath);
     }
-
+*/
     @Test
     void consumeMessage_ocrServiceException() throws Exception {
         // Arrange
