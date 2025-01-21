@@ -52,6 +52,7 @@ public class OCRService {
 
     public String performOCR(byte[] document) throws Exception {
         List<BufferedImage> bufferedImages = null;
+        System.out.println("OCR");
         try {
             PDFDocument pdfDocument = new PDFDocument();
             pdfDocument.load(new ByteArrayInputStream(document));
@@ -60,6 +61,7 @@ public class OCRService {
             List<Image> images = renderer.render(pdfDocument);
 
             bufferedImages = convertToBufferedImages(images);
+            System.out.println("OCR try");
 
         }
         catch (Exception e){

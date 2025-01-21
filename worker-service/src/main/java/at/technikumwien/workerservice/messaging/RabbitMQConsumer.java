@@ -34,7 +34,7 @@ public class RabbitMQConsumer {
             System.out.println("Extracted text from file: " + text);
             elasticsearchService.save(text);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.getMessage();
         }
     }
 }
