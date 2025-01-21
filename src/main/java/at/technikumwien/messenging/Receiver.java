@@ -11,7 +11,7 @@ public class Receiver {
         System.out.println("Received message from worker-service");
     }
 
-    @RabbitListener(queues = "shared-queue")
+    @RabbitListener(queues = "search-queue")
     public void receiveSearch(byte[] files) {
         System.out.println("Received message from worker-service");
     }

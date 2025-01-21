@@ -17,3 +17,5 @@ spring:
         socket-timeout: 5s
       rest:
         uris: http://elasticsearch:9200
+      repositories:
+        enabled: true

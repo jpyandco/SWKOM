@@ -37,11 +37,8 @@
       <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
       <version>${spring-boot.version}</version>
     </dependency>
-    <dependency>
-      <groupId>co.elastic.clients</groupId>
-      <artifactId>elasticsearch-java</artifactId>
-      <version>8.6.2</version>
-    </dependency>
+
+
 
     <!-- Spring Data JPA -->
     <dependency>
@@ -73,6 +70,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+
 
     <!-- Logging -->
     <dependency>

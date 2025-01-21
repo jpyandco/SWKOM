@@ -1,7 +1,6 @@
 package at.technikumwien.workerservice.service;
 
 import at.technikumwien.workerservice.entities.Document;
-import at.technikumwien.workerservice.repositories.DocumentRepository;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -26,8 +25,6 @@ public class OCRService {
 
     private final ITesseract tesseract;
 
-    @Autowired
-    private DocumentRepository documentRepository;
 
     @Autowired
     private static PdfToImageConverter pdfToImageConverter;
@@ -47,25 +44,27 @@ public class OCRService {
         Document document = new Document();
         document.setTitle(title);
         document.setAuthor(author);
-        document.setText(extractedText);
+        document.setData(fileBytes);
 
         // Save to Elasticsearch
-        documentRepository.save(document);
+       //documentRepository.save(document);
     }
 
-    public String performOCR(String filePath) throws Exception {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            throw new IOException("File not found: " + filePath);
+    public String performOCR(byte[] document) throws Exception {
+        List<BufferedImage> bufferedImages = null;
+        try {
+            PDFDocument pdfDocument = new PDFDocument();
+            pdfDocument.load(new ByteArrayInputStream(document));
+
+            SimpleRenderer renderer = new SimpleRenderer();
+            List<Image> images = renderer.render(pdfDocument);
+
+            bufferedImages = convertToBufferedImages(images);
+
         }
-
-        PDFDocument pdfDocument = new PDFDocument();
-        pdfDocument.load(file);
-
-        SimpleRenderer renderer = new SimpleRenderer();
-        List<Image> images = renderer.render(pdfDocument);
-
-        List<BufferedImage> bufferedImages = convertToBufferedImages(images);
+        catch (Exception e){
+            System.out.println("Exception: " + e);
+        }
         return extractTextFromImages(bufferedImages);
     }
 
@@ -113,25 +112,5 @@ public class OCRService {
             tempFile.delete();
         }
     }
-    public List<String> extractTextFromPdf(byte[] pdfBytes) throws IOException, TesseractException {
-        List<String> ocrResults = new ArrayList<>();
 
-        // Convert PDF to images
-        List<byte[]> imageBytesList = PdfToImageConverter.convertPdfToImages(pdfBytes);
-
-
-        // Process each image page
-        for (byte[] imageBytes : imageBytesList) {
-            // Convert byte[] to BufferedImage
-            try (ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes)) {
-                BufferedImage image = ImageIO.read(bais);
-
-                // Perform OCR on the image
-                String ocrText = tesseract.doOCR(image);
-                ocrResults.add(ocrText);
-            }
-        }
-
-        return ocrResults;
-    }
 }

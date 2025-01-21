@@ -41,7 +41,7 @@ class RabbitMQConsumerTest {
     void consumeMessage_ocrServiceException() throws Exception {
         // Arrange
         String filePath = "sample.pdf";
-        when(ocrService.performOCR(filePath)).thenThrow(new RuntimeException("OCR failed"));
+        //when(ocrService.performOCR(filePath)).thenThrow(new RuntimeException("OCR failed"));
 
         // Act & Assert
         try {

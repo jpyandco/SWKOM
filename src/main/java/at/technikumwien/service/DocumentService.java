@@ -46,7 +46,7 @@ public class DocumentService {
 
         }
         try {
-            sender.sendMessage(document.getData());
+            sender.sendMessage(document);
         } catch (Exception e){
             System.out.println(e);
             LOGGER.error(e);
