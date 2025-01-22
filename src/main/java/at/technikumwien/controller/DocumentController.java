@@ -1,79 +1,64 @@
 package at.technikumwien.controller;
 
 import at.technikumwien.dto.DocumentDTO;
-import at.technikumwien.entities.Document;
-import at.technikumwien.messenging.Sender;
 import at.technikumwien.service.DocumentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class DocumentController {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private final DocumentService documentService;
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
-    @Autowired
-    public DocumentController(DocumentService documentService) throws IOException, TimeoutException {
+    public DocumentController(DocumentService documentService) {
         this.documentService = documentService;
     }
 
     @GetMapping("/all")
     public List<DocumentDTO> getAllDocuments() {
-        LOGGER.info("/all");
+        LOGGER.info("Fetching all documents");
         return documentService.getAllDocuments();
     }
 
     @PostMapping("/document")
     public ResponseEntity<DocumentDTO> createDocument(@RequestParam("title") String title,
-                                                      @RequestParam("author") String author,
-                                                      @RequestParam("file") MultipartFile file) {
-        LOGGER.info("/document");
-        try {
-            Document document = new Document();
-            document.setTitle(title);
-            document.setAuthor(author);
-            document.setData(file.getBytes());
-            Document savedDocument = documentService.saveDocument(document);
-            DocumentDTO dto = new DocumentDTO();
-            dto.setId(savedDocument.getId());
-            dto.setTitle(savedDocument.getTitle());
-            dto.setAuthor(savedDocument.getAuthor());
-            dto.setData(savedDocument.getData());
+            @RequestParam("author") String author,
+            @RequestParam("file") MultipartFile file) {
+        LOGGER.info("Received request to upload a document: title={}, author={}, fileSize={} bytes",
+                title, author, file.getSize());
+        if (file.isEmpty()) {
+            LOGGER.warn("Failed to upload document: File is empty");
+            return ResponseEntity.badRequest().body(null);
+        }
 
-            return ResponseEntity.ok(dto);
+        try {
+            DocumentDTO documentDTO = documentService.processAndSaveDocument(title, author, file);
+            LOGGER.info("Document uploaded successfully with ID: {}", documentDTO.getId());
+            return ResponseEntity.ok(documentDTO);
         } catch (Exception e) {
+            LOGGER.error("Error while uploading document: {}", e.getMessage(), e);
             return ResponseEntity.status(500).body(null);
         }
     }
 
     @DeleteMapping("/document/{id}")
     public ResponseEntity<String> deleteDocument(@PathVariable Long id) {
-        LOGGER.info("/delete");
+        LOGGER.info("Received request to delete document with ID: {}", id);
         try {
-            documentService.deleteDocumentById(Math.toIntExact(id));
+            documentService.deleteDocumentById(id.intValue());
+            LOGGER.info("Document deleted successfully with ID: {}", id);
             return ResponseEntity.ok("Document deleted successfully");
         } catch (Exception e) {
+            LOGGER.error("Error deleting document: {}", e.getMessage(), e);
             return ResponseEntity.status(500).body("Error deleting document: " + e.getMessage());
         }
     }
-
-    @GetMapping("/document/{id}/download")
-    public ResponseEntity<byte[]> downloadDocument(@PathVariable Long id) {
-        return documentService.download(id);
-
-    }
-
-
 }

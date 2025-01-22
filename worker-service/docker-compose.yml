@@ -10,6 +10,13 @@ services:
       - shared-network
     depends_on:
       - elasticsearch
+      - minio
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_BUCKET_NAME: documents
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
@@ -21,6 +28,24 @@ services:
     networks:
       - shared-network
 
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9090"
+    ports:
+      - "9000:9000" # MinIO S3 API
+      - "9090:9090" # MinIO Console
+    networks:
+      - shared-network
+    volumes:
+      - minio-data:/data
+
 networks:
   shared-network:
     external: true
+
+volumes:
+  minio-data:

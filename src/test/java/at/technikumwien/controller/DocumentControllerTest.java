@@ -62,9 +62,9 @@ public class DocumentControllerTest {
         savedDocument.setTitle("Test Title");
         savedDocument.setAuthor("Test Author");
 
+        /*
         when(documentService.saveDocument(any(Document.class))).thenReturn(savedDocument);
 
-        /*
         ResponseEntity<DocumentDTO> response = documentController.createDocument(input);
 
         assertNotNull(response.getBody());

@@ -1,41 +1,33 @@
 package at.technikumwien.workerservice.service;
 
 import at.technikumwien.workerservice.entities.DocumentElasticsearch;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
-import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.Response;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.elasticsearch.client.RestClient;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 @Service
 public class ElasticsearchService {
 
     private final RestClient restClient;
+    private final ObjectMapper objectMapper;
 
-    @Autowired
-    public ElasticsearchService(RestClient restClient) {
+    public ElasticsearchService(RestClient restClient, ObjectMapper objectMapper) {
         this.restClient = restClient;
+        this.objectMapper = objectMapper;
     }
 
-    public void search() throws IOException {
-        Request request = new Request("GET", "/_search");
-        Response response = restClient.performRequest(request);
-
-        System.out.println(EntityUtils.toString(response.getEntity()));
-    }
-
-    public void save(String text) throws IOException { //DocumentElasticsearch document
+    public void save(DocumentElasticsearch document) throws Exception {
+        String json = objectMapper.writeValueAsString(document);
 
         Request request = new Request("POST", "/documents/_doc/");
-        String jsonString = "{ \"content\": \"" + text + "\" }";
-        request.setEntity(new StringEntity(jsonString, ContentType.APPLICATION_JSON));
+        request.setEntity(new StringEntity(json, ContentType.APPLICATION_JSON));
         Response response = restClient.performRequest(request);
 
-        System.out.println(EntityUtils.toString(response.getEntity()));
+        System.out.println("Saved document to Elasticsearch: " + EntityUtils.toString(response.getEntity()));
     }
 }

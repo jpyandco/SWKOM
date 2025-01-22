@@ -1,40 +1,44 @@
 package at.technikumwien.workerservice.messaging;
 
-import at.technikumwien.workerservice.entities.Document;
 import at.technikumwien.workerservice.entities.DocumentElasticsearch;
 import at.technikumwien.workerservice.service.ElasticsearchService;
 import at.technikumwien.workerservice.service.OCRService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class RabbitMQConsumer {
 
     private final OCRService ocrService;
     private final ElasticsearchService elasticsearchService;
+    private final ObjectMapper objectMapper;
 
-    public RabbitMQConsumer(OCRService ocrService, ElasticsearchService elasticsearchService) {
+    public RabbitMQConsumer(OCRService ocrService, ElasticsearchService elasticsearchService, ObjectMapper objectMapper) {
         this.ocrService = ocrService;
         this.elasticsearchService = elasticsearchService;
+        this.objectMapper = objectMapper;
     }
 
     @RabbitListener(queues = "shared-queue")
-    public void consumeMessage(byte[] document) {
-        System.out.println("Received files from MainApp");
-        try {
-            //DocumentElasticsearch eDocument = new DocumentElasticsearch();
-            //eDocument.setAuthor(document.getAuthor());
-            // eDocument.setTitle(document.getTitle());
+    public void consumeMessage(String message) {
+        System.out.println("Received message from MainApp");
 
-            String text = ocrService.performOCR(document);
-            //eDocument.setText(text);
-            System.out.println("Extracted text from file: " + text);
-            elasticsearchService.save(text);
+        try {
+            // Deserialize the JSON message
+            DocumentElasticsearch document = objectMapper.readValue(message, DocumentElasticsearch.class);
+
+            // Perform OCR
+            String extractedText = ocrService.performOCR(document.getData());
+
+            // Save to Elasticsearch
+            document.setText(extractedText);
+            elasticsearchService.save(document);
+
+            System.out.println("Processed and saved document: " + document.getTitle());
         } catch (Exception e) {
-            e.getMessage();
+            e.printStackTrace();
+            System.err.println("Failed to process message: " + e.getMessage());
         }
     }
 }
