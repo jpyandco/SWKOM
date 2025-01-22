@@ -4,8 +4,7 @@ document.getElementById("dataForm").addEventListener("submit", async function (e
     if (!form) {
         console.error("The form element with ID 'dataForm' is not found in the DOM.");
         return;
-    }
-    else {
+    } else {
         console.info("Form found!");
     }
     console.info("Hello")
@@ -26,8 +25,7 @@ document.getElementById("dataForm").addEventListener("submit", async function (e
 
     try {
         const response = await fetch("http://localhost:8081/api/document", {
-            method: "POST",
-            body: formData
+            method: "POST", body: formData
         });
 
         if (response.ok) {

@@ -2,7 +2,7 @@ package at.technikumwien.service;
 
 import at.technikumwien.dto.DocumentDTO;
 import at.technikumwien.entities.Document;
-import at.technikumwien.messenging.RabbitMQSender;
+import at.technikumwien.messaging.RabbitMQSender;
 import at.technikumwien.repositories.DocumentRepository;
 import jakarta.validation.Validator;
 import org.apache.logging.log4j.LogManager;
@@ -27,7 +27,7 @@ public class DocumentService {
         this.rabbitMQSender = rabbitMQSender;
     }
 
-    public DocumentDTO processAndSaveDocument(String title, String author, MultipartFile file) throws Exception {
+    public DocumentDTO processAndSaveDocument(String title, String author, MultipartFile file) {
         LOGGER.info("Processing document: title={}, author={}, fileSize={} bytes", title, author, file.getSize());
 
         if (file.getSize() > 10 * 1024 * 1024) {

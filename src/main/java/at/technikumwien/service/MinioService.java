@@ -11,6 +11,7 @@ import java.io.InputStream;
 
 @Service
 public class MinioService {
+
     private final MinioClient minioClient;
     private final String bucketName;
 
@@ -21,13 +22,11 @@ public class MinioService {
 
     public void uploadFile(String fileName, String name, InputStream fileInputStream, String contentType) {
         try {
-            // Check if the bucket exists; create it if needed
             boolean isBucketExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
             if (!isBucketExist) {
                 minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
             }
 
-            // Upload the file
             minioClient.putObject(
                     PutObjectArgs.builder()
                             .bucket(bucketName)

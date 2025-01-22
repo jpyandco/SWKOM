@@ -25,16 +25,10 @@ public class RabbitMQConsumer {
         System.out.println("Received message from MainApp");
 
         try {
-            // Deserialize the JSON message
             DocumentElasticsearch document = objectMapper.readValue(message, DocumentElasticsearch.class);
-
-            // Perform OCR
             String extractedText = ocrService.performOCR(document.getData());
-
-            // Save to Elasticsearch
             document.setText(extractedText);
             elasticsearchService.save(document);
-
             System.out.println("Processed and saved document: " + document.getTitle());
         } catch (Exception e) {
             e.printStackTrace();

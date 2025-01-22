@@ -1,4 +1,4 @@
-package at.technikumwien.messenging;
+package at.technikumwien.messaging;
 
 import at.technikumwien.entities.Document;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +18,6 @@ public class RabbitMQSender {
 
     public void sendMessage(Document document) {
         try {
-            // Convert the document to JSON
             String message = objectMapper.writeValueAsString(document);
             rabbitTemplate.convertAndSend("shared-queue", message);
             System.out.println("Sent document to RabbitMQ");

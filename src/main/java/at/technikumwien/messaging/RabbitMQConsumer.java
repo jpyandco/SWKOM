@@ -1,10 +1,10 @@
-package at.technikumwien.messenging;
+package at.technikumwien.messaging;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class Receiver {
+@Component
+public class RabbitMQConsumer {
 
     @RabbitListener(queues = "search-queue")
     public void receiveSearch(byte[] files) {

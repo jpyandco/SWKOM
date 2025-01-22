@@ -1,4 +1,4 @@
-package at.technikumwien.messenging;
+package at.technikumwien.workerservice.messaging;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
@@ -7,12 +7,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String QUEUE_NAME = "shared-queue";
-
     @Bean
     public Queue sharedQueue() {
-        return new Queue(QUEUE_NAME, true);
+        return new Queue("shared-queue", true);
     }
+
     @Bean
     public Queue searchQueue() {
         return new Queue("search-queue", true);

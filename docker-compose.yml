@@ -8,7 +8,7 @@ services:
     depends_on:
       - postgres
       - rabbitmq
-      - minio
+      - minio-main
 
   frontend:
     build: ./frontend
@@ -49,20 +49,20 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
       - rabbitmq_logs:/var/log/rabbitmq
 
-  minio:
+  minio-main:
     image: minio/minio:latest
-    container_name: minio
+    container_name: minio-main
     environment:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
     command: server /data --console-address ":9090"
     ports:
-      - "9000:9000" # MinIO S3 API
-      - "9090:9090" # MinIO Console
+      - "9001:9000" # MinIO S3 API for MainApp
+      - "9091:9090" # MinIO Console for MainApp
     networks:
       - shared-network
     volumes:
-      - minio-data:/data
+      - minio-data-main:/data
 
 networks:
   shared-network:
@@ -72,4 +72,4 @@ volumes:
   postgres-data:
   rabbitmq_data:
   rabbitmq_logs:
-  minio-data:
+  minio-data-main:

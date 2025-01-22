@@ -3,19 +3,19 @@ package at.technikumwien.controller;
 import at.technikumwien.dto.DocumentDTO;
 import at.technikumwien.entities.Document;
 import at.technikumwien.service.DocumentService;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-@Ignore
+
+@Disabled
 public class DocumentControllerTest {
 
     @Mock

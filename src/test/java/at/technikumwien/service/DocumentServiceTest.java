@@ -1,20 +1,14 @@
 package at.technikumwien.service;
 
-import at.technikumwien.entities.Document;
-import at.technikumwien.messenging.RabbitMQSender;
-import at.technikumwien.messenging.Sender;
+import at.technikumwien.messaging.RabbitMQSender;
 import at.technikumwien.repositories.DocumentRepository;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @Disabled
 public class DocumentServiceTest {

@@ -29,11 +29,8 @@ public class DocumentController {
     }
 
     @PostMapping("/document")
-    public ResponseEntity<DocumentDTO> createDocument(@RequestParam("title") String title,
-            @RequestParam("author") String author,
-            @RequestParam("file") MultipartFile file) {
-        LOGGER.info("Received request to upload a document: title={}, author={}, fileSize={} bytes",
-                title, author, file.getSize());
+    public ResponseEntity<DocumentDTO> createDocument(@RequestParam("title") String title, @RequestParam("author") String author, @RequestParam("file") MultipartFile file) {
+        LOGGER.info("Received request to upload a document: title={}, author={}, fileSize={} bytes", title, author, file.getSize());
         if (file.isEmpty()) {
             LOGGER.warn("Failed to upload document: File is empty");
             return ResponseEntity.badRequest().body(null);

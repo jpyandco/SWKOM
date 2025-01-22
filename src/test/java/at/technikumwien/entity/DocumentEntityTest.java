@@ -1,5 +1,5 @@
 package at.technikumwien.entity;
-
+/*
 import at.technikumwien.dto.DocumentDTO;
 import at.technikumwien.entities.Document;
 import at.technikumwien.mapper.DocumentMapper;
@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/*
 public class DocumentEntityTest {
 
     private final DocumentMapper mapper = Mappers.getMapper(DocumentMapper.class);

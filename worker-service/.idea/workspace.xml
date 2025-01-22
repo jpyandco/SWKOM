@@ -5,27 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b703c692-4f70-48cb-bb9f-6c442ba74f5f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/config/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/config/MinioConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/controller/FileController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/service/MinioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../downloaded_test.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sql/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../sql/init.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/controller/DocumentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/controller/DocumentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/entities/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/entities/Document.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/RabbitMQSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/RabbitMQSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/dto/DTOInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/entities/EntityInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/RabbitMQSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messaging/RabbitMQSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messaging/RabbitMQConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messenging/Sender.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/service/DocumentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/service/DocumentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/service/MinioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/service/MinioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/validation/DocumentValidator.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/test/java/at/technikumwien/controller/DocumentControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/test/java/at/technikumwien/controller/DocumentControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/test/java/at/technikumwien/entity/DocumentEntityTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/test/java/at/technikumwien/entity/DocumentEntityTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/test/java/at/technikumwien/service/DocumentServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/test/java/at/technikumwien/service/DocumentServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/entities/DocumentElasticsearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/entities/DocumentElasticsearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messaging/RabbitMQConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/service/ElasticsearchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/service/ElasticsearchService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/service/OCRService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/service/OCRService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +87,9 @@
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="at.technikumwien.workerservice.messaging" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="at.technikumwien.workerservice.service" />
