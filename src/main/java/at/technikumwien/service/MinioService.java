@@ -20,7 +20,7 @@ public class MinioService {
         this.bucketName = defaultBucketName;
     }
 
-    public void uploadFile(String fileName, String name, InputStream fileInputStream, String contentType) {
+    public void uploadFile(String fileName, InputStream fileInputStream, String contentType) {
         try {
             boolean isBucketExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
             if (!isBucketExist) {

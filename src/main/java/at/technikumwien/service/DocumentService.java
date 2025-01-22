@@ -20,19 +20,29 @@ public class DocumentService {
     private final DocumentRepository repository;
     private final Validator validator;
     private final RabbitMQSender rabbitMQSender;
+    private final MinioService minioService;
 
-    public DocumentService(DocumentRepository repository, Validator validator, RabbitMQSender rabbitMQSender) {
+    public DocumentService(DocumentRepository repository, Validator validator, RabbitMQSender rabbitMQSender, MinioService minioService) {
         this.repository = repository;
         this.validator = validator;
         this.rabbitMQSender = rabbitMQSender;
+        this.minioService = minioService;
     }
 
-    public DocumentDTO processAndSaveDocument(String title, String author, MultipartFile file) {
-        LOGGER.info("Processing document: title={}, author={}, fileSize={} bytes", title, author, file.getSize());
+    public DocumentDTO uploadAndSaveDocument(String title, String author, MultipartFile file) {
+        LOGGER.info("Processing document for upload and database save: title={}, author={}", title, author);
 
-        if (file.getSize() > 10 * 1024 * 1024) {
-            LOGGER.warn("File size exceeds the maximum limit of 10MB: size={} bytes", file.getSize());
-            throw new IllegalArgumentException("File size exceeds the maximum limit of 10MB");
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("File is empty. Cannot process upload.");
+        }
+
+        String fileName = file.getOriginalFilename();
+        try {
+            LOGGER.info("Uploading file '{}' to MinIO.", fileName);
+            minioService.uploadFile(fileName, file.getInputStream(), file.getContentType());
+        } catch (Exception e) {
+            LOGGER.error("Failed to upload file '{}' to MinIO.", fileName, e);
+            throw new RuntimeException("Failed to upload file to MinIO", e);
         }
 
         Document document = new Document();
@@ -40,29 +50,34 @@ public class DocumentService {
         document.setAuthor(author);
 
         try {
-            byte[] data = file.getBytes();
-            document.setData(data);
-            LOGGER.info("File content successfully converted to bytes");
+            LOGGER.info("Reading file content for saving in the database.");
+            document.setData(file.getBytes());
         } catch (Exception e) {
-            LOGGER.error("Error reading file bytes: {}", e.getMessage(), e);
+            LOGGER.error("Failed to read file bytes for '{}'.", fileName, e);
             throw new RuntimeException("Failed to read file bytes", e);
         }
 
         Document savedDocument = repository.save(document);
-        LOGGER.info("Document saved successfully in database with ID: {}", savedDocument.getId());
+        LOGGER.info("Document saved successfully in the database with ID: {}", savedDocument.getId());
 
         return convertToDTO(savedDocument);
     }
 
     public List<DocumentDTO> getAllDocuments() {
-        LOGGER.info("Fetching all documents from database");
+        LOGGER.info("Fetching all documents from the database.");
         return repository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     public void deleteDocumentById(int id) {
-        LOGGER.info("Deleting document with ID: {}", id);
+        LOGGER.info("Attempting to delete document with ID: {}", id);
+
+        if (!repository.existsById((long) id)) {
+            LOGGER.warn("Document with ID: {} does not exist. Skipping delete operation.", id);
+            throw new IllegalArgumentException("Document with ID: " + id + " does not exist.");
+        }
+
         repository.deleteById((long) id);
         LOGGER.info("Document deleted successfully with ID: {}", id);
     }

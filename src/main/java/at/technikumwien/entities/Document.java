@@ -27,5 +27,6 @@ public class Document {
     @Column(columnDefinition = "BYTEA", nullable = false)
     private byte[] data;
 
+    @Lob
     private String text;
 }

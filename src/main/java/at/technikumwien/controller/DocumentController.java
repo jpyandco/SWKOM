@@ -29,19 +29,18 @@ public class DocumentController {
     }
 
     @PostMapping("/document")
-    public ResponseEntity<DocumentDTO> createDocument(@RequestParam("title") String title, @RequestParam("author") String author, @RequestParam("file") MultipartFile file) {
-        LOGGER.info("Received request to upload a document: title={}, author={}, fileSize={} bytes", title, author, file.getSize());
-        if (file.isEmpty()) {
-            LOGGER.warn("Failed to upload document: File is empty");
-            return ResponseEntity.badRequest().body(null);
-        }
+    public ResponseEntity<DocumentDTO> createDocument(
+            @RequestParam("title") String title,
+            @RequestParam("author") String author,
+            @RequestParam("file") MultipartFile file) {
+        LOGGER.info("Uploading file to MinIO and saving metadata: title={}, author={}", title, author);
 
         try {
-            DocumentDTO documentDTO = documentService.processAndSaveDocument(title, author, file);
-            LOGGER.info("Document uploaded successfully with ID: {}", documentDTO.getId());
+            DocumentDTO documentDTO = documentService.uploadAndSaveDocument(title, author, file);
+            LOGGER.info("File uploaded and metadata saved successfully with ID: {}", documentDTO.getId());
             return ResponseEntity.ok(documentDTO);
         } catch (Exception e) {
-            LOGGER.error("Error while uploading document: {}", e.getMessage(), e);
+            LOGGER.error("Error uploading file: {}", e.getMessage(), e);
             return ResponseEntity.status(500).body(null);
         }
     }

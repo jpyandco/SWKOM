@@ -9,6 +9,14 @@ services:
       - postgres
       - rabbitmq
       - minio-main
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydatabase
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: mypassword
+      MINIO_ENDPOINT: http://minio-main:9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_BUCKET_NAME: documents
 
   frontend:
     build: ./frontend
@@ -52,6 +60,7 @@ services:
   minio-main:
     image: minio/minio:latest
     container_name: minio-main
+    hostname: minio-main
     environment:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
@@ -66,7 +75,7 @@ services:
 
 networks:
   shared-network:
-    external: true
+    external: false
 
 volumes:
   postgres-data:

@@ -45,7 +45,7 @@ services:
 
 networks:
   shared-network:
-    external: true
+    external: false
 
 volumes:
   minio-data-worker:

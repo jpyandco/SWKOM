@@ -20,7 +20,7 @@ public class DocumentServiceTest {
 
     @Mock
     private RabbitMQSender sender;
-
+/*
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -28,7 +28,7 @@ public class DocumentServiceTest {
         Validator validator = factory.getValidator();
         documentService = new DocumentService(documentRepository, validator, sender);
     }
-/*
+
     @Test
     public void testSaveDocument_Valid() {
 
