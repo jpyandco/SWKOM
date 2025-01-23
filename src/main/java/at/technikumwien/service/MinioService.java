@@ -5,6 +5,8 @@ import io.minio.PutObjectArgs;
 import io.minio.GetObjectArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.BucketExistsArgs;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -12,6 +14,7 @@ import java.io.InputStream;
 @Service
 public class MinioService {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private final MinioClient minioClient;
     private final String bucketName;
 
@@ -36,11 +39,12 @@ public class MinioService {
                             .build()
             );
         } catch (Exception e) {
+            LOGGER.error("Error uploading file to MinIO: {}", fileName, e);
             throw new RuntimeException("Error uploading file to MinIO", e);
         }
     }
 
-    public InputStream downloadFile(String fileName, String name) {
+    public InputStream downloadFile(String fileName) {
         try {
             return minioClient.getObject(
                     GetObjectArgs.builder()
@@ -49,7 +53,9 @@ public class MinioService {
                             .build()
             );
         } catch (Exception e) {
+            LOGGER.error("Error downloading file from MinIO: {}", fileName, e);
             throw new RuntimeException("Error downloading file from MinIO", e);
         }
     }
+
 }

@@ -5,6 +5,7 @@ import at.technikumwien.entities.Document;
 import at.technikumwien.messaging.RabbitMQSender;
 import at.technikumwien.repositories.DocumentRepository;
 import jakarta.validation.Validator;
+import java.io.InputStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -18,14 +19,10 @@ public class DocumentService {
 
     private static final Logger LOGGER = LogManager.getLogger();
     private final DocumentRepository repository;
-    private final Validator validator;
-    private final RabbitMQSender rabbitMQSender;
     private final MinioService minioService;
 
     public DocumentService(DocumentRepository repository, Validator validator, RabbitMQSender rabbitMQSender, MinioService minioService) {
         this.repository = repository;
-        this.validator = validator;
-        this.rabbitMQSender = rabbitMQSender;
         this.minioService = minioService;
     }
 
@@ -48,19 +45,17 @@ public class DocumentService {
         Document document = new Document();
         document.setTitle(title);
         document.setAuthor(author);
-
-        try {
-            LOGGER.info("Reading file content for saving in the database.");
-            document.setData(file.getBytes());
-        } catch (Exception e) {
-            LOGGER.error("Failed to read file bytes for '{}'.", fileName, e);
-            throw new RuntimeException("Failed to read file bytes", e);
-        }
+        document.setMinioKey(fileName);
 
         Document savedDocument = repository.save(document);
-        LOGGER.info("Document saved successfully in the database with ID: {}", savedDocument.getId());
+        LOGGER.info("Document metadata saved successfully in the database with ID: {}", savedDocument.getId());
 
         return convertToDTO(savedDocument);
+    }
+
+    public InputStream downloadDocumentFromMinIO(String minioKey) {
+        LOGGER.info("Fetching file '{}' from MinIO.", minioKey);
+        return minioService.downloadFile(minioKey);
     }
 
     public List<DocumentDTO> getAllDocuments() {
@@ -68,6 +63,12 @@ public class DocumentService {
         return repository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+    }
+
+    public DocumentDTO getDocumentById(int id) {
+        return repository.findById((long) id)
+                .map(this::convertToDTO)
+                .orElse(null);
     }
 
     public void deleteDocumentById(int id) {
@@ -88,7 +89,7 @@ public class DocumentService {
         dto.setId(document.getId());
         dto.setTitle(document.getTitle());
         dto.setAuthor(document.getAuthor());
-        dto.setData(document.getData());
+        dto.setMinioKey(document.getMinioKey());
         return dto;
     }
 }

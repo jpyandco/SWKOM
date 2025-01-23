@@ -10,5 +10,5 @@ public class DocumentDTO {
     private int id;
     private String title;
     private String author;
-    private byte[] data;
+    private String minioKey;
 }

@@ -23,9 +23,9 @@ public class Document {
     @Size(max = 255, message = "Author cannot exceed 255 characters")
     private String author;
 
-    @Lob
-    @Column(columnDefinition = "BYTEA", nullable = false)
-    private byte[] data;
+    @NotBlank(message = "MinIO key cannot be blank")
+    @Size(max = 255, message = "MinIO key cannot exceed 255 characters")
+    private String minioKey;
 
     @Lob
     private String text;

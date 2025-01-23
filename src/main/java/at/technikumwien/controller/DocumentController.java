@@ -2,6 +2,7 @@ package at.technikumwien.controller;
 
 import at.technikumwien.dto.DocumentDTO;
 import at.technikumwien.service.DocumentService;
+import java.io.InputStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,27 @@ public class DocumentController {
             return ResponseEntity.status(500).body(null);
         }
     }
+
+    @GetMapping("/document/{id}/download")
+    public ResponseEntity<byte[]> downloadDocument(@PathVariable int id) {
+        LOGGER.info("Downloading document with ID: {}", id);
+
+        DocumentDTO documentDTO = documentService.getDocumentById(id);
+        if (documentDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        try (InputStream inputStream = documentService.downloadDocumentFromMinIO(documentDTO.getMinioKey())) {
+            byte[] fileContent = inputStream.readAllBytes();
+            return ResponseEntity.ok()
+                    .header("Content-Disposition", "attachment; filename=" + documentDTO.getMinioKey())
+                    .body(fileContent);
+        } catch (Exception e) {
+            LOGGER.error("Error downloading file: {}", e.getMessage(), e);
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
 
     @DeleteMapping("/document/{id}")
     public ResponseEntity<String> deleteDocument(@PathVariable Long id) {
