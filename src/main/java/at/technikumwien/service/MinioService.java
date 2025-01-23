@@ -3,6 +3,7 @@ package at.technikumwien.service;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import io.minio.GetObjectArgs;
+import io.minio.RemoveObjectArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.BucketExistsArgs;
 import org.apache.logging.log4j.LogManager;
@@ -58,4 +59,17 @@ public class MinioService {
         }
     }
 
+    public void deleteFile(String fileName) {
+        try {
+            minioClient.removeObject(
+                    RemoveObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(fileName)
+                            .build()
+            );
+        } catch (Exception e) {
+            LOGGER.error("Error deleting file from MinIO: {}", fileName, e);
+            throw new RuntimeException("Error deleting file from MinIO", e);
+        }
+    }
 }

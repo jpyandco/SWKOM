@@ -74,9 +74,18 @@ public class DocumentService {
     public void deleteDocumentById(int id) {
         LOGGER.info("Attempting to delete document with ID: {}", id);
 
-        if (!repository.existsById((long) id)) {
+        Document document = repository.findById((long) id).orElse(null);
+        if (document == null) {
             LOGGER.warn("Document with ID: {} does not exist. Skipping delete operation.", id);
             throw new IllegalArgumentException("Document with ID: " + id + " does not exist.");
+        }
+
+        try {
+            LOGGER.info("Deleting file '{}' from MinIO.", document.getMinioKey());
+            minioService.deleteFile(document.getMinioKey());
+        } catch (Exception e) {
+            LOGGER.error("Failed to delete file '{}' from MinIO.", document.getMinioKey(), e);
+            throw new RuntimeException("Failed to delete file from MinIO", e);
         }
 
         repository.deleteById((long) id);
