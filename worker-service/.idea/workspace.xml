@@ -5,9 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b703c692-4f70-48cb-bb9f-6c442ba74f5f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../DockerCleanup.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/config/MinioConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/entities/WorkerDocument.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/service/MinioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sql/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../sql/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/dto/DocumentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/dto/DocumentDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messaging/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messaging/RabbitMQConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messaging/RabbitMQConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messaging/RabbitMQConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messaging/RabbitMQSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/messaging/RabbitMQSender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/service/DocumentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/service/DocumentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/java/at/technikumwien/service/MinioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/at/technikumwien/service/MinioService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/entities/Document.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/entities/DocumentElasticsearch.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/messaging/RabbitMQSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/service/ElasticsearchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/at/technikumwien/workerservice/service/ElasticsearchService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,6 +163,8 @@
       <workItem from="1737555000363" duration="7135000" />
       <workItem from="1737571919954" duration="5000" />
       <workItem from="1737630878333" duration="2135000" />
+      <workItem from="1737982216430" duration="6820000" />
+      <workItem from="1738003700174" duration="699000" />
     </task>
     <servers />
   </component>

@@ -58,6 +58,13 @@
       <version>1.0.1</version>
     </dependency>
 
+    <!-- MinIO -->
+    <dependency>
+      <groupId>io.minio</groupId>
+      <artifactId>minio</artifactId>
+      <version>8.5.17</version>
+    </dependency>
+
     <!-- Logging -->
     <dependency>
       <groupId>ch.qos.logback</groupId>

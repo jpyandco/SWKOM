@@ -1,7 +1,7 @@
 package at.technikumwien.workerservice.messaging;
 
-import at.technikumwien.workerservice.entities.DocumentElasticsearch;
-import at.technikumwien.workerservice.service.ElasticsearchService;
+import at.technikumwien.workerservice.entities.WorkerDocument;
+import at.technikumwien.workerservice.service.MinioService;
 import at.technikumwien.workerservice.service.OCRService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -11,28 +11,33 @@ import org.springframework.stereotype.Component;
 public class RabbitMQConsumer {
 
     private final OCRService ocrService;
-    private final ElasticsearchService elasticsearchService;
+    private final RabbitMQSender rabbitMQSender;
     private final ObjectMapper objectMapper;
+    private final MinioService minioService;
 
-    public RabbitMQConsumer(OCRService ocrService, ElasticsearchService elasticsearchService, ObjectMapper objectMapper) {
+    public RabbitMQConsumer(OCRService ocrService, RabbitMQSender rabbitMQSender, ObjectMapper objectMapper, MinioService minioService) {
         this.ocrService = ocrService;
-        this.elasticsearchService = elasticsearchService;
+        this.rabbitMQSender = rabbitMQSender;
         this.objectMapper = objectMapper;
+        this.minioService = minioService;
     }
 
-    @RabbitListener(queues = "shared-queue")
-    public void consumeMessage(String message) {
-        System.out.println("Received message from MainApp");
+    @RabbitListener(queues = "OCR_QUEUE")
+    public void consumeOCRQueue(String message) {
+        System.out.println("Received OCR job from OCR_QUEUE");
 
         try {
-            DocumentElasticsearch document = objectMapper.readValue(message, DocumentElasticsearch.class);
-            String extractedText = ocrService.performOCR(document.getData());
+            WorkerDocument document = objectMapper.readValue(message, WorkerDocument.class);
+            byte[] documentData = minioService.downloadFile(document.getMinioKey());
+
+            String extractedText = ocrService.performOCR(documentData);
             document.setText(extractedText);
-            elasticsearchService.save(document);
-            System.out.println("Processed and saved document: " + document.getTitle());
+
+            rabbitMQSender.sendToResultQueue(document);
+            System.out.println("Processed OCR job and sent result to RESULT_QUEUE: " + document.getTitle());
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Failed to process message: " + e.getMessage());
+            System.err.println("Failed to process OCR job: " + e.getMessage());
         }
     }
 }

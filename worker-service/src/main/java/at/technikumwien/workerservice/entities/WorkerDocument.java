@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DocumentElasticsearch {
+public class WorkerDocument {
     private String title;
     private String author;
+    private String minioKey;
     private String text;
-    private byte[] data;
 }

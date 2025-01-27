@@ -53,6 +53,19 @@ public class DocumentService {
         return convertToDTO(savedDocument);
     }
 
+    public void updateDocumentText(int documentId, String text) {
+        LOGGER.info("Updating document with ID: {} with OCR text.", documentId);
+
+        Document document = repository.findById((long) documentId).orElseThrow(() ->
+                new IllegalArgumentException("Document with ID " + documentId + " not found")
+        );
+
+        document.setText(text);
+        repository.save(document);
+
+        LOGGER.info("Updated document text for document ID: {}", documentId);
+    }
+
     public InputStream downloadDocumentFromMinIO(String minioKey) {
         LOGGER.info("Fetching file '{}' from MinIO.", minioKey);
         return minioService.downloadFile(minioKey);

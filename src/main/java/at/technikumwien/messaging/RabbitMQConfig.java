@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     @Bean
-    public Queue sharedQueue() {
-        return new Queue("shared-queue", true);
+    public Queue ocrQueue() {
+        return new Queue("OCR_QUEUE", true);
     }
 
     @Bean
-    public Queue searchQueue() {
-        return new Queue("search-queue", true);
+    public Queue resultQueue() {
+        return new Queue("RESULT_QUEUE", true);
     }
 }

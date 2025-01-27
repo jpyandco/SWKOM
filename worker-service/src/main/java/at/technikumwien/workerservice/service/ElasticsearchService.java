@@ -1,6 +1,6 @@
 package at.technikumwien.workerservice.service;
 
-import at.technikumwien.workerservice.entities.DocumentElasticsearch;
+import at.technikumwien.workerservice.entities.WorkerDocument;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
@@ -21,7 +21,7 @@ public class ElasticsearchService {
         this.objectMapper = objectMapper;
     }
 
-    public void save(DocumentElasticsearch document) throws Exception {
+    public void save(WorkerDocument document) throws Exception {
         String json = objectMapper.writeValueAsString(document);
 
         Request request = new Request("POST", "/documents/_doc/");

@@ -13,6 +13,9 @@ services:
       - minio-worker
     environment:
       SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: user
+      SPRING_RABBITMQ_PASSWORD: password
       MINIO_ENDPOINT: http://minio-worker:9000
       MINIO_ACCESS_KEY: minioadmin
       MINIO_SECRET_KEY: minioadmin
@@ -36,8 +39,8 @@ services:
       MINIO_ROOT_PASSWORD: minioadmin
     command: server /data --console-address ":9090"
     ports:
-      - "9002:9000" # MinIO S3 API for WorkerService
-      - "9092:9090" # MinIO Console for WorkerService
+      - "9002:9000"
+      - "9092:9090"
     networks:
       - shared-network
     volumes:
@@ -45,7 +48,8 @@ services:
 
 networks:
   shared-network:
-    external: false
+    external: true
 
 volumes:
+  es-data:
   minio-data-worker:

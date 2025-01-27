@@ -1,6 +1,6 @@
 package at.technikumwien.messaging;
 
-import at.technikumwien.entities.Document;
+import at.technikumwien.dto.DocumentDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
@@ -16,13 +16,13 @@ public class RabbitMQSender {
         this.objectMapper = objectMapper;
     }
 
-    public void sendMessage(Document document) {
+    public void sendToOCRQueue(DocumentDTO documentDTO) {
         try {
-            String message = objectMapper.writeValueAsString(document);
-            rabbitTemplate.convertAndSend("shared-queue", message);
-            System.out.println("Sent document to RabbitMQ");
+            String message = objectMapper.writeValueAsString(documentDTO);
+            rabbitTemplate.convertAndSend("OCR_QUEUE", message);
+            System.out.println("Sent OCR job to OCR_QUEUE for document: " + documentDTO.getTitle());
         } catch (Exception e) {
-            System.err.println("Error while sending message: " + e.getMessage());
+            System.err.println("Error sending OCR job to OCR_QUEUE: " + e.getMessage());
         }
     }
 }
