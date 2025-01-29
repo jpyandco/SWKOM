@@ -20,10 +20,12 @@ public class DocumentService {
     private static final Logger LOGGER = LogManager.getLogger();
     private final DocumentRepository repository;
     private final MinioService minioService;
+    private final RabbitMQSender rabbitMQSender;
 
     public DocumentService(DocumentRepository repository, Validator validator, RabbitMQSender rabbitMQSender, MinioService minioService) {
         this.repository = repository;
         this.minioService = minioService;
+        this.rabbitMQSender = rabbitMQSender;
     }
 
     public DocumentDTO uploadAndSaveDocument(String title, String author, MultipartFile file) {
@@ -50,7 +52,11 @@ public class DocumentService {
         Document savedDocument = repository.save(document);
         LOGGER.info("Document metadata saved successfully in the database with ID: {}", savedDocument.getId());
 
-        return convertToDTO(savedDocument);
+        DocumentDTO documentDTO = convertToDTO(savedDocument);
+        rabbitMQSender.sendToOCRQueue(documentDTO);
+        LOGGER.info("Sent OCR job to RabbitMQ for document ID: {}", savedDocument.getId());
+
+        return documentDTO;
     }
 
     public void updateDocumentText(int documentId, String text) {

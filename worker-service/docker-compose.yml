@@ -10,13 +10,12 @@ services:
       - shared-network
     depends_on:
       - elasticsearch
-      - minio-worker
     environment:
       SPRING_RABBITMQ_HOST: rabbitmq
       SPRING_RABBITMQ_PORT: 5672
       SPRING_RABBITMQ_USERNAME: user
       SPRING_RABBITMQ_PASSWORD: password
-      MINIO_ENDPOINT: http://minio-worker:9000
+      MINIO_ENDPOINT: http://minio-main:9000
       MINIO_ACCESS_KEY: minioadmin
       MINIO_SECRET_KEY: minioadmin
       MINIO_BUCKET_NAME: documents
@@ -31,25 +30,6 @@ services:
     networks:
       - shared-network
 
-  minio-worker:
-    image: minio/minio:latest
-    container_name: minio-worker
-    environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
-    command: server /data --console-address ":9090"
-    ports:
-      - "9002:9000"
-      - "9092:9090"
-    networks:
-      - shared-network
-    volumes:
-      - minio-data-worker:/data
-
 networks:
   shared-network:
     external: true
-
-volumes:
-  es-data:
-  minio-data-worker:
